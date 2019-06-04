@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unload unload_date="2019-05-07 22:12:58">
+<x_293397_web_cli_code_entries action="INSERT_OR_UPDATE">
+<active>false</active>
+<description>View ACL with roles for field on table</description>
+<name>acl</name>
+<script><![CDATA[snCli.beginOutputWait('check-acl');
+
+var success = false;
+
+input = input.replace(/^acl[ \t]*/,'');
+
+var tableName = input.replace(/^([^ \t]+)[ \t]+.*$/,"$1");
+input = input.replace(/^[^ \t]+[ \t]+/,"");
+
+var fieldName = '';
+
+if (input.match(/^for[ \t]+/)) {
+	fieldName = input.replace(/^for[ \t]+([^ \t]+)[ \t]*.*$/,"$1");
+}
+
+if (tableName.length > 0) {
+
+var callServerApi = new GlideAjax('x_293397_web_cli.WebCLIServer');
+callServerApi.addParam('sysparm_name','getFieldAcl');
+callServerApi.addParam('sysparm_cli_table_name',tableName);
+callServerApi.addParam('sysparm_cli_field_name',fieldName);
+callServerApi.addParam('sysparm_scope','x_293397_web_cli');
+callServerApi.getXML(function(response) {
+	var serverData = JSON.parse(response.responseXML.documentElement.getAttribute('answer'));
+	if (serverData) {
+		var aclData = serverData.map(function(thisAcl) {
+			return (thisAcl.acl + ' on ' + thisAcl.type + ' ' + thisAcl.operation + ' requires(' + thisAcl.roles.join(',') + ')');
+		});
+		snCli.endOutputWait(aclData.join('\n'));
+	}
+	else {
+		snCli.endOutputWait('No ACLs found');
+	}
+});
+}
+else {
+	snCli.endOutputWait('Invalid ACL command');
+}]]></script>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2019-04-29 19:22:26</sys_created_on>
+<sys_id>c2b7ab2adbc1330082269fd2ca9619e4</sys_id>
+<sys_mod_count>17</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2019-05-05 22:28:27</sys_updated_on>
+<usage>acl &amp;lt;table&amp;gt; [for &amp;lt;field&amp;gt;]</usage>
+</x_293397_web_cli_code_entries>
+<x_293397_web_cli_code_entries action="INSERT_OR_UPDATE">
+<active>false</active>
+<description>Show Test Greeting</description>
+<name>greet</name>
+<script><![CDATA[snCli.showOutput('What is your name?');
+snCli.addInputTask(function (input) {
+	snCli.showOutput('Nice to meet you, ' + input);
+	snCli.resetInputTask();
+});]]></script>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2019-04-25 12:56:18</sys_created_on>
+<sys_id>24bbe5d1db01330082269fd2ca961937</sys_id>
+<sys_mod_count>4</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2019-05-06 18:38:21</sys_updated_on>
+<usage/>
+</x_293397_web_cli_code_entries>
+<x_293397_web_cli_code_entries action="INSERT_OR_UPDATE">
+<active>false</active>
+<description>Display Incident Count</description>
+<name>inc-count</name>
+<script><![CDATA[var callServerApi = new GlideAjax('x_293397_web_cli.WebCLIServer');
+callServerApi.addParam('sysparm_name','getIncidentCount');
+callServerApi.addParam('sysparm_scope','x_293397_web_cli');
+callServerApi.getXML(function(response) {
+	var serverData = response.responseXML.documentElement.getAttribute('answer');
+	snCli.showOutput('Incident count: ' + serverData);
+});]]></script>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2019-04-25 13:19:05</sys_created_on>
+<sys_id>66aea515db01330082269fd2ca9619e7</sys_id>
+<sys_mod_count>24</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2019-04-30 14:16:46</sys_updated_on>
+<usage>inc-count</usage>
+</x_293397_web_cli_code_entries>
+<x_293397_web_cli_code_entries action="INSERT_OR_UPDATE">
+<active>false</active>
+<description>Get table schema (including inheritance</description>
+<name>schema</name>
+<script><![CDATA[input = input.replace(/^schema[ \t]*/i,'');
+
+if (input.length > 0) {
+	var callServerApi = new GlideAjax('x_293397_web_cli.WebCLIServer');
+	callServerApi.addParam('sysparm_name','getTableSchema');
+	callServerApi.addParam('sysparm_cli_table_name',input);
+	callServerApi.addParam('sysparm_scope','x_293397_web_cli');
+	callServerApi.getXML(function(response) {
+		var serverData = JSON.parse(response.responseXML.documentElement.getAttribute('answer'));
+		var tableListing = [];
+		serverData.tables.forEach(function(thisTable) {
+			thisTable.fields.forEach(function(thisField) {
+				tableListing.push("  " + thisTable.name + '.' + thisField.element + '(' + thisField.type + ')');
+			});
+		});
+		snCli.showOutput("Table Inheritence:\n  " + serverData.tableMap + '\n\nFields - table.field(datatype):\n' + tableListing.join('\n'));
+	});
+}
+else {
+	snCli.showOutput('Table name not specified');
+}]]></script>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2019-04-26 17:47:24</sys_created_on>
+<sys_id>5e277325dbc1330082269fd2ca961967</sys_id>
+<sys_mod_count>13</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2019-05-05 22:51:42</sys_updated_on>
+<usage>schema &amp;lt;table-name&amp;gt;</usage>
+</x_293397_web_cli_code_entries>
+<x_293397_web_cli_code_entries action="INSERT_OR_UPDATE">
+<active>true</active>
+<description>Select fields from table</description>
+<name>select</name>
+<script><![CDATA[snCli.beginOutputWait('select');
+
+var query = {
+	fields : '',
+	table : '',
+	filter : '',
+	records : 0,
+};
+
+var error = false;
+
+input = input.replace(/^select[ \t]*/i,'');
+
+//Determine fields
+if (input.match(/^\*/)) {
+	//query.fields = '*';
+	error = true;
+}
+else {
+	query.fields = input.replace(/^([^ \t]+)[ \t]*.*$/,"$1");
+}
+
+input = input.replace(/^[^ \t]+[ \t]+/,"");
+
+//verify from clause
+if (input.match(/^from/i)) {
+	input = input.replace(/^from[ \t]*/i,'');
+	query.table = input.replace(/^([^ \t]+)[ \t]+.*$/,"$1");
+	input = input.replace(/^[^ \t]+[ \t]*/,"");
+	if (input.match(/^limit/i)) {
+		input = input.replace(/^limit[ \t]*/i,'');
+		query.records = input.replace(/^([^ \t]+)[ \t]+.*$/,'$1');
+		input = input.replace(/^[^ \t]+[ \t]*/,"");
+	}
+	if (input.match(/^where/i)) {
+		input = input.replace(/^where[ \t]*/i,'');
+		query.filter = input.replace(/[ \t]+AND[ \t]+/g,"^").replace(/[ \t]+OR[ \t]+/g,'^OR');
+	}
+	else {
+		query.filter = '';
+	}
+}
+else {
+	error = true;
+}
+
+
+if (!error) {
+	var callServerApi = new GlideAjax('x_293397_web_cli.WebCLIServer');
+	callServerApi.addParam('sysparm_name','runSelectQuery');
+	callServerApi.addParam('sysparm_cli_select_table',query.table);
+	callServerApi.addParam('sysparm_cli_select_fields',query.fields);
+	callServerApi.addParam('sysparm_cli_select_filter',query.filter);
+	callServerApi.addParam('sysparm_cli_select_records',query.records);
+	callServerApi.addParam('sysparm_scope','x_293397_web_cli');
+	callServerApi.getXML(function(response) {
+		var serverData = response.responseXML.documentElement.getAttribute('answer');
+		var respAr = JSON.parse(serverData);
+		if (respAr.length > 0) {
+			var outAr = [];
+			snCli.endOutputWait(JSON.parse(serverData).map(function(thisItm) {
+				return thisItm.join(' -- ');
+			}).join('\n'));
+		}
+		else {
+			snCli.showOutput('Error while executing query');
+		}
+	});
+}
+else {
+	snCli.showOutput('Query syntax error');
+}]]></script>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2019-04-25 19:39:19</sys_created_on>
+<sys_id>6c80431ddbc1330082269fd2ca9619fa</sys_id>
+<sys_mod_count>25</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2019-05-06 21:25:59</sys_updated_on>
+<usage>select &amp;lt;fieldspec&amp;gt; from &amp;lt;tables-name&amp;gt; limit &amp;lt;record-count&amp;gt; where &amp;lt;filter&amp;gt;
+    &amp;lt;fieldspec&amp;gt; is a comma-delimited list of fields to return
+    &amp;lt;filter&amp;gt; is a series of ServiceNow queries separated by " AND " or " OR "</usage>
+</x_293397_web_cli_code_entries>
+<x_293397_web_cli_code_entries action="INSERT_OR_UPDATE">
+<active>true</active>
+<description>Shows objects related to a table</description>
+<name>show</name>
+<script><![CDATA[success = false;
+
+postData = {
+	type: "",
+	table : ""
+};
+
+var objectType = "";
+
+input = input.replace(/^show[ \t]+/,'');
+
+if (input.match(/^business-rule/)) {
+	input = input.replace(/^business-rule[ \t]+/,"");
+	if (input.match(/^for/)) {
+		input = input.replace(/^for[ \t]+/,"");
+		if (input.length > 0) {
+			success = true;
+			postData.table = input;
+			postData.type = "sys_script";
+			objectType = "business rule";
+		}
+	}
+}
+else if (input.match(/^client-script/)) {
+	input = input.replace(/^client-script[ \t]+/,"");
+	if (input.match(/^for/)) {
+		input = input.replace(/^for[ \t]+/,"");
+		if (input.length > 0) {
+			success = true;
+			postData.table = input;
+			postData.type = "sys_script_client";
+			objectType = "client script";
+		}
+	}
+}
+else if (input.match(/^ui-action/)) {
+	input = input.replace(/^ui-action[ \t]+/,"");
+	if (input.match(/^for/)) {
+		input = input.replace(/^for[ \t]+/,"");
+		if (input.length > 0) {
+			success = true;
+			postData.table = input;
+			postData.type = "sys_ui_action";
+			objectType = "ui action";
+		}
+	}
+}
+else if (input.match(/^ui-policy/)) {
+	input = input.replace(/^ui-policy[ \t]+/,"");
+	if (input.match(/^for/)) {
+		input = input.replace(/^for[ \t]+/,"");
+		if (input.length > 0) {
+			success = true;
+			postData.table = input;
+			postData.type = "sys_ui_policy";
+			objectType = "ui policy";
+		}
+	}
+}
+else if (input.match(/^data-policy/)) {
+	input = input.replace(/^data-policy[ \t]+/,"");
+	if (input.match(/^for/)) {
+		input = input.replace(/^for[ \t]+/,"");
+		if (input.length > 0) {
+			success = true;
+			postData.table = input;
+			postData.type = "sys_data_policy2";
+			objectType = "data policy";
+		}
+	}
+}
+else if (input.match(/^notification/)) {
+	input = input.replace(/^notification[ \t]+/,"");
+	if (input.match(/^for/)) {
+		input = input.replace(/^for[ \t]+/,"");
+		if (input.length > 0) {
+			success = true;
+			postData.table = input;
+			postData.type = "sysevent_email_action";
+			objectType = "notification";
+		}
+	}
+}
+else if (input.match(/^dictionary/)) {
+	input = input.replace(/^dictionary[ \t]+/,"");
+	if (input.match(/^for/)) {
+		input = input.replace(/^for[ \t]+/,"");
+		if (input.length > 0) {
+			success = true;
+			postData.table = input;
+			postData.type = "sys_dictionary";
+			objectType = "dictionary";
+		}
+	}
+}
+else if (input.match(/^override/)) {
+	input = input.replace(/^override[ \t]+/,"");
+	if (input.match(/^for/)) {
+		input = input.replace(/^for[ \t]+/,"");
+		if (input.length > 0) {
+			success = true;
+			postData.table = input;
+			postData.type = "sys_dictionary_override";
+			objectType = "dictionary override";
+		}
+	}
+}
+else if (input.match(/^acl/)) {
+	input = input.replace(/^acl[ \t]+/,"");
+	if (input.match(/^for/)) {
+		input = input.replace(/^for[ \t]+/,"");
+		if (input.length > 0) {
+			success = true;
+			postData.table = input;
+			postData.type = "sys_security_acl";
+			objectType = "acl";
+		}
+	}
+}
+else if (input.match(/^style/)) {
+	input = input.replace(/^style[ \t]+/,"");
+	if (input.match(/^for/)) {
+		input = input.replace(/^for[ \t]+/,"");
+		if (input.length > 0) {
+			success = true;
+			postData.table = input;
+			postData.type = "sys_ui_style";
+			objectType = "style";
+		}
+	}
+}
+else if (input.match(/^view-rule/)) {
+	input = input.replace(/^view-rule[ \t]+/,"");
+	if (input.match(/^for/)) {
+		input = input.replace(/^for[ \t]+/,"");
+		if (input.length > 0) {
+			success = true;
+			postData.table = input;
+			postData.type = "sysrule_view";
+			objectType = "view rule";
+		}
+	}
+}
+else if (input.match(/^hierarchy/)) {
+	input = input.replace(/^hierarchy[ \t]+/,"");
+	if (input.match(/^for/)) {
+		input = input.replace(/^for[ \t]+/,"");
+		if (input.length > 0) {
+			success = true;
+			postData.table = input;
+			postData.type = "hierarchy";
+		}
+	}
+}
+else if (input.match(/^info/)) {
+	input = input.replace(/^info[ \t]+/,"");
+	if (input.match(/^for/)) {
+		input = input.replace(/^for[ \t]+/,"");
+		if (input.length > 0) {
+			success = true;
+			postData.table = input;
+			postData.type = "sys_db_object";
+			objectType = "info";
+		}
+	}
+}
+
+if (success) {
+	var callServerApi = new GlideAjax('x_293397_web_cli.WebCLIServer');
+	callServerApi.addParam('sysparm_name','getRelatedObjects');
+	callServerApi.addParam('sysparm_obj_type',postData.type);
+	callServerApi.addParam('sysparm_obj_table',postData.table);
+	callServerApi.addParam('sysparm_scope','x_293397_web_cli');
+	callServerApi.getXML(function(response) {
+		var serverData = JSON.parse(response.responseXML.documentElement.getAttribute('answer'));
+		if (serverData.length > 0) {
+			if (postData.type == 'hierarchy') {
+				snCli.showOutput('Hierarchy for ' + postData.table + '\n  ' + serverData.join(' --> '));
+			}
+			else {
+				snCli.showOutput(objectType + " for " + postData.table + ":\n" + serverData.map(function(thisObj) {
+					return "  " + thisObj.name + ' [<a target="_blank" href="/nav_to.do?uri=' + encodeURI('/' + postData.type + '.do?sys_id=' + thisObj.sys_id) + '">view</a>]';
+				}).join('\n'));
+			}
+		}
+		else {
+			snCli.showOutput('No records found');
+		}
+	});
+}
+else {
+	snCli.showOutput('Error in show statement');
+}]]></script>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2019-05-05 17:12:11</sys_created_on>
+<sys_id>4b06cea8db51330082269fd2ca961939</sys_id>
+<sys_mod_count>36</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2019-05-06 22:56:41</sys_updated_on>
+<usage>show &amp;lt;object-type&amp;gt; for &amp;lt;table-name&amp;gt;
+    &amp;lt;object-type&amp;gt; may be business-rule, client-script, ui-action, ui-policy, data-policy,
+        notification, dictionary, override, acl, style, hierarchy, info</usage>
+</x_293397_web_cli_code_entries>
+<x_293397_web_cli_code_entries action="INSERT_OR_UPDATE">
+<active>false</active>
+<description>Show's steele's greeting</description>
+<name>steele</name>
+<script><![CDATA[snCli.showOutput('NERD!!!!!!!!!!!!!');]]></script>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2019-04-26 16:55:39</sys_created_on>
+<sys_id>db9c6321dbc1330082269fd2ca961987</sys_id>
+<sys_mod_count>2</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2019-04-30 14:16:58</sys_updated_on>
+<usage>steele</usage>
+</x_293397_web_cli_code_entries>
+<x_293397_web_cli_code_entries action="INSERT_OR_UPDATE">
+<active>true</active>
+<description>Show current user information</description>
+<name>whoami</name>
+<script><![CDATA[snCli.showOutput(g_user.firstName + ' ' + g_user.lastName + ' (' + g_user.userName + ')');]]></script>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2019-04-30 14:22:37</sys_created_on>
+<sys_id>3b2faf72db41330082269fd2ca96198e</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2019-04-30 14:22:37</sys_updated_on>
+<usage>whoami</usage>
+</x_293397_web_cli_code_entries>
+</unload>

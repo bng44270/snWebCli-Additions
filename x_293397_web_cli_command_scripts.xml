@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unload unload_date="2019-05-07 22:13:13">
+<x_293397_web_cli_command_scripts action="INSERT_OR_UPDATE">
+<active>true</active>
+<description>Display Number and Short Descriptions for Incidents containing SAP in the Description</description>
+<name>select-sap</name>
+<script>print *******  BEGIN SAP Related records
+select number,short_description from incident where descriptionCONTAINSSAP
+print *******  END SAP Related records</script>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2019-04-26 18:47:13</sys_created_on>
+<sys_id>5846c4b5db05330082269fd2ca96196a</sys_id>
+<sys_mod_count>6</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2019-05-06 18:48:31</sys_updated_on>
+</x_293397_web_cli_command_scripts>
+</unload>

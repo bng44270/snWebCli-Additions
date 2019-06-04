@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unload unload_date="2019-05-07 22:16:44">
+<x_293397_web_cli_m2m_profiles_code_entries action="INSERT_OR_UPDATE">
+<code_entries display_value="View ACL with roles for field on table">c2b7ab2adbc1330082269fd2ca9619e4</code_entries>
+<profiles display_value="Default">5b89e0c5db01330082269fd2ca96190b</profiles>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2019-04-29 19:22:52</sys_created_on>
+<sys_id>124b2f2edbc1330082269fd2ca9619e5</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2019-04-29 19:22:52</sys_updated_on>
+</x_293397_web_cli_m2m_profiles_code_entries>
+<x_293397_web_cli_m2m_profiles_code_entries action="INSERT_OR_UPDATE">
+<code_entries display_value="Show Test Greeting">24bbe5d1db01330082269fd2ca961937</code_entries>
+<profiles display_value="Default">5b89e0c5db01330082269fd2ca96190b</profiles>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2019-04-25 12:56:18</sys_created_on>
+<sys_id>207ce5d1db01330082269fd2ca96193d</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2019-04-25 12:56:18</sys_updated_on>
+</x_293397_web_cli_m2m_profiles_code_entries>
+<x_293397_web_cli_m2m_profiles_code_entries action="INSERT_OR_UPDATE">
+<code_entries display_value="Select fields from table">6c80431ddbc1330082269fd2ca9619fa</code_entries>
+<profiles display_value="Default">5b89e0c5db01330082269fd2ca96190b</profiles>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2019-04-25 19:39:19</sys_created_on>
+<sys_id>54b8cf51db05330082269fd2ca961926</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2019-04-25 19:39:19</sys_updated_on>
+</x_293397_web_cli_m2m_profiles_code_entries>
+<x_293397_web_cli_m2m_profiles_code_entries action="INSERT_OR_UPDATE">
+<code_entries display_value="Shows objects related to a table">4b06cea8db51330082269fd2ca961939</code_entries>
+<profiles display_value="Default">5b89e0c5db01330082269fd2ca96190b</profiles>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2019-05-05 21:47:37</sys_created_on>
+<sys_id>8df54b24db15330082269fd2ca961903</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2019-05-05 21:47:37</sys_updated_on>
+</x_293397_web_cli_m2m_profiles_code_entries>
+<x_293397_web_cli_m2m_profiles_code_entries action="INSERT_OR_UPDATE">
+<code_entries display_value="Show's steele's greeting">db9c6321dbc1330082269fd2ca961987</code_entries>
+<profiles display_value="Default">5b89e0c5db01330082269fd2ca96190b</profiles>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2019-04-26 16:55:39</sys_created_on>
+<sys_id>94dcefe9db81330082269fd2ca9619c7</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2019-04-26 16:55:39</sys_updated_on>
+</x_293397_web_cli_m2m_profiles_code_entries>
+<x_293397_web_cli_m2m_profiles_code_entries action="INSERT_OR_UPDATE">
+<code_entries display_value="Display Incident Count">66aea515db01330082269fd2ca9619e7</code_entries>
+<profiles display_value="Default">5b89e0c5db01330082269fd2ca96190b</profiles>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2019-04-25 18:10:40</sys_created_on>
+<sys_id>a964fe91dbc1330082269fd2ca961921</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2019-04-25 18:10:40</sys_updated_on>
+</x_293397_web_cli_m2m_profiles_code_entries>
+<x_293397_web_cli_m2m_profiles_code_entries action="INSERT_OR_UPDATE">
+<code_entries display_value="Get table schema (including inheritance">5e277325dbc1330082269fd2ca961967</code_entries>
+<profiles display_value="Default">5b89e0c5db01330082269fd2ca96190b</profiles>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2019-04-26 17:47:24</sys_created_on>
+<sys_id>d2a83b69dbc1330082269fd2ca96195a</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2019-04-26 17:47:24</sys_updated_on>
+</x_293397_web_cli_m2m_profiles_code_entries>
+<x_293397_web_cli_m2m_profiles_code_entries action="INSERT_OR_UPDATE">
+<code_entries display_value="Show current user information">3b2faf72db41330082269fd2ca96198e</code_entries>
+<profiles display_value="Default">5b89e0c5db01330082269fd2ca96190b</profiles>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2019-04-30 14:23:34</sys_created_on>
+<sys_id>eb50f3b2db41330082269fd2ca961908</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2019-04-30 14:23:34</sys_updated_on>
+</x_293397_web_cli_m2m_profiles_code_entries>
+</unload>
