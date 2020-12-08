@@ -1,0 +1,1 @@
+snCli.showOutput(g_user.firstName + ' ' + g_user.lastName + ' (' + g_user.userName + ')');

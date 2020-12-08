@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Generate script/command files
+
 stripxml() {
 	sed 's/\(<\/[^>]\+>\)/\1\n/g;s/<[^>]\+>//g'
 }

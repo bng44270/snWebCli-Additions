@@ -1,0 +1,3 @@
+print *******  BEGIN SAP Related records
+select number,short_description from incident where descriptionCONTAINSSAP
+print *******  END SAP Related records
